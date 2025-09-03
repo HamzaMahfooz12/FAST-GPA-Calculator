@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+</head>
+<style>
+    table,tr,th,td{
+
+        
+         padding: 15px;
+         padding-right: 30px;
+        border: 2px solid black;
+         border-collapse: collapse;  
+         text-align: center;
+         margin: 7px;
+    }
+    th{
+        background-color: #333;
+        color: white;
+    }
+    section{
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+
+    h1{
+        text-align: center;
+    }
+    input,select,button{
+        padding: 10px;
+        padding-left: 15px;
+        margin: 7px;
+    }
+    input:hover{
+        color: black;
+        background-color: white;
+        
+        
+    }
+    input::selection{
+        border-color: #333;
+    }
+    input:hover::placeholder{
+        position: relative;
+        border: aqua;
+        top: -12px;
+        transition: 0.7s ease;
+        color: blue;
+    }
+
+    body{
+        background-color: gainsboro;
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="gpa.jpg">
+
+    <title>Fast Gpa Calculator</title>
+<body>
+    <div id="div">
+    <h1>Fast Gpa Calculator</h1>
+    <input type="text" name="Course Name" placeholder="Enter Course name" id="course">
+    <input type="number" name="Enter Credit" placeholder="Enter Credit Hours " id="credit">
+    <select name="Select Grade" id="grade">
+        <h1>Select Grade</h1>
+        <option value="A+">A+(4.0)</option>
+        <option value="A">A(4.0)</option>
+        <option value="A-">A-(3.7)</option>
+        <option value="B+">B+(3.3)</option>
+    <option value="B">B (3.0)</option>
+    <option value="B-">B- (2.7)</option>
+    <option value="C+">C+ (2.3)</option>
+    <option value="C">C (2.0)</option>
+    <option value="C-">C- (1.7)</option>
+    <option value="D+">D+ (1.3)</option>
+    <option value="D">D (1.0)</option>
+    <option value="F">F (0.0)</option>
+    </select>
+
+    <button onclick="addcourse()">Add Course</button>
+<section>
+    <table id="table">
+        <tr>
+            <th>Course Name</th>
+            <th>Credit Hours</th>
+            <th>Grade</th>
+            <th>Grade Points</th>
+        </tr>
+    </table>
+    </section>
+    <h3 id="result"></h3>
+    </div>
+</body>
+<script>
+
+    let courses=[];
+
+    function addcourse(){
+        let name=document.getElementById("course").value;
+        let hours=document.getElementById("credit").value;
+
+        if (!name || !hours) {
+        alert("Please enter all fields!");
+        return;
+      }
+        let grade=document.getElementById("grade").value;
+        let totalPoints=gradeToPoints(grade)*hours;
+        courses.push({name,hours,grade,totalPoints});
+
+        calculategpa();
+        updatetable();
+
+        let name1=document.getElementById("course").value="";
+        let hours1=document.getElementById("credit").value="";
+        let grade1=document.getElementById("grade").value="A+";
+
+
+    }
+
+    function updatetable(){
+    let table=document.getElementById("table");
+      table.innerHTML=`<tr>
+            <th>Course Name</th>
+            <th>Credit Hours</th>
+            <th>Grade</th>
+            <th>Grade Points</th>
+        </tr>`;
+  for(let i=0;i<courses.length;i++){
+
+    table.innerHTML+=`<tr>
+        <td>${courses[i].name}</td>
+        <td>${courses[i].hours}</td>
+        <td>${courses[i].grade}</td>
+        <td>${courses[i].totalPoints}</td>
+        </tr>`;
+  }
+    }
+
+    function calculategpa(){
+        let thours=0,tpoints=0;
+
+        for(let i=0;i<courses.length;i++){
+       
+         thours+=courses[i].hours;
+         tpoints+=courses[i].totalPoints;
+        }
+
+        let gpa=0;
+        gpa=tpoints/thours;
+
+        let a=document.getElementById("result").innerText="Your GPA is:"+gpa.toFixed(2);
+      
+    }
+
+    function gradeToPoints(grade){
+     
+        
+			let points=0.0;
+				
+		if (grade == "A+" || grade == "A")
+        points = 4.0;
+        
+    else if (grade == "A-")
+        points = 3.7;
+    else if (grade == "B+")
+        points = 3.3;
+    else if (grade == "B")
+        points = 3.0;
+    else if (grade == "B-")
+        points = 2.7;
+    else if (grade == "C+")
+        points = 2.3;
+    else if (grade == "C")
+        points = 2.0;
+    else if (grade == "C-")
+        points = 1.7;
+    else if (grade == "D+")
+        points = 1.3;
+    else if (grade == "D")
+        points = 1.0;
+    else if (grade == "F")
+        points = 0.0;
+        
+		return points;	
+
+    }
+</script>
+    
+</body>
+</html>
